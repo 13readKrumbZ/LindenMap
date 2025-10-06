@@ -1,2 +1,0 @@
-#MapCode
-AggaDvonCossie Map project
