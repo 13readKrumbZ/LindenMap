@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-.leaflet-container {
-  height: 90vh; /* Set a height for your map container */
-  width: 100%;
-}
-
 :root {
   --background: #ffffff;
   --foreground: #171717;

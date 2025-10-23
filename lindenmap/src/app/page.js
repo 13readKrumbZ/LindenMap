@@ -1,12 +1,10 @@
-// This is a Server Component by default
-import ClientOnlyMap from "../../components/ClientOnlyMap";
-import "./globals.css";
+import MapWrapper from "/components/MapWrapper";
 
-export default function HomePage() {
+export default function Home() {
   return (
     <main>
-      <h1>My Leaflet Map</h1>
-      <ClientOnlyMap />
+      <h1>Leaflet Map</h1>
+      <MapWrapper />
     </main>
   );
 }
