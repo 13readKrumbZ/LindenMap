@@ -8,6 +8,8 @@ export default function Map() {
     <MapContainer
       center={[6, -58.3]}
       zoom={13}
+      maxZoom={16}
+      minZoom={13}
       style={{ height: "100vh", width: "100%" }}
     >
       <TileLayer

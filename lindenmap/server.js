@@ -1,3 +1,4 @@
+// start server [node server.js
 const express = require("express");
 const MBTiles = require("@mapbox/mbtiles");
 const cors = require("cors");
