@@ -1,0 +1,11 @@
+.MapMenue {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  height: 100%;
+  width: 200px;
+  position: sticky;
+  right: 0;
+
+  background-color: #f88383;
+}
