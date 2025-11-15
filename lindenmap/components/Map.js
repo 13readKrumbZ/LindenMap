@@ -26,37 +26,36 @@ export default function Map() {
     { geocode: [6.008, -58.31], popup: "Marker 3" },
   ]);
 
-  function createMarker(latlng) {
-    setMarkers((prev) => [
-      ...prev,
-      {
-        geocode: [latlng.lat, latlng.lng],
-        popup: `Marker ${prev.length + 1}`,
-      },
-    ]);
+  const [clickCoords, setClickCoords] = useState(null);
+
+  function getclickCoords(latlng) {
+    setClickCoords(latlng);
   }
 
   return (
-    <MapContainer
-      center={[6, -58.3]}
-      zoom={13}
-      maxZoom={16}
-      minZoom={13}
-      style={{ height: "100vh", width: "100%" }}
-    >
-      <TileLayer
-        url="http://localhost:3001/tiles/{z}/{x}/{y}.png"
-        attribution="&copy; Linden Map"
-      />
+    <div className="page">
+      <div>
+        <MapMenue clickCoords={clickCoords} setMarkers={setMarkers} />
+      </div>
+      <MapContainer
+        center={[6, -58.3]}
+        zoom={13}
+        maxZoom={16}
+        minZoom={13}
+        style={{ height: "100vh", width: "100%" }}
+      >
+        <TileLayer
+          url="http://localhost:3001/tiles/{z}/{x}/{y}.png"
+          attribution="&copy; Linden Map"
+        />
 
-      <MapMenue />
+        <DetectClick onMapClick={getclickCoords} />
 
-      <DetectClick onMapClick={createMarker} />
-
-      {markers.map((marker) => (
-        <Marker position={marker.geocode}></Marker>
-      ))}
-    </MapContainer>
+        {markers.map((marker) => (
+          <Marker position={marker.geocode}></Marker>
+        ))}
+      </MapContainer>
+    </div>
   );
 }
 

@@ -7,5 +7,32 @@
   position: sticky;
   right: 0;
 
-  background-color: #f88383;
+  background-color: #b1b49f;
+}
+
+.page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #60684e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  background-color: rgb(112, 116, 103);
+  border-radius: 25px;
+  padding: 10px;
+  margin: 10px;
 }
