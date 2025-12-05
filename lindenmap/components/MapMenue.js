@@ -1,18 +1,28 @@
 import "./components.css";
 import { useState } from "react";
 
-export default function MapMenue({ clickCoords, setMarkers }) {
+export default function MapMenue({ clickCoords, setMarkers, setIsMenueOpen }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  function createMarker() {
+  const [title, setTitle] = useState("");
+  const [address, setAddress] = useState("");
+  const [comments, setComments] = useState("");
+
+  function createMarker(title, address, comments) {
     if (!clickCoords) return;
-    setMarkers((prev) => [
-      ...prev,
-      {
-        geocode: [clickCoords.lat, clickCoords.lng],
-        popup: `Marker ${prev.length + 1}`,
-      },
-    ]);
+
+    const newMarker = {
+      id: String(Date.now()),
+      title: title,
+      geocode: [clickCoords.lat, clickCoords.lng],
+      address: address,
+      comments: comments,
+    };
+
+    setMarkers((prev) => [...prev, newMarker]);
+    setAddress("");
+    setTitle("");
+    setComments("");
     setIsFormOpen(false);
   }
 
@@ -25,12 +35,30 @@ export default function MapMenue({ clickCoords, setMarkers }) {
       className="form"
       onSubmit={(e) => {
         e.preventDefault();
-        createMarker();
+        createMarker(title, address, comments);
       }}
     >
-      <input type="text" className="input" placeholder="Name Marker"></input>
-      <input type="text" className="input" placeholder="Add Address"></input>
-      <input type="text" className="input" placeholder="Add Notes"></input>
+      <input
+        type="text"
+        className="input"
+        placeholder="Name Marker"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      ></input>
+      <input
+        type="text"
+        className="input"
+        placeholder="Add Address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+      ></input>
+      <input
+        type="text"
+        className="input"
+        placeholder="Add Comments"
+        value={comments}
+        onChange={(e) => setComments(e.target.value)}
+      ></input>
       <div>
         <button className="btn" type="submit">
           Save Marker
@@ -47,10 +75,16 @@ export default function MapMenue({ clickCoords, setMarkers }) {
   );
 
   return (
-    <div className="MapMenue">
-      <h2>Map Menue</h2>
-      {MarkerHandler}
-      <button className="btn">Remove Marker</button>
+    <div>
+      <button> </button>
+      <div className="MapMenue">
+        <h2>Map Menue</h2>
+        {MarkerHandler}
+        <button className="btn">Remove Marker</button>
+        <button className="btn" onClick={() => setIsMenueOpen(false)}>
+          Close Menue
+        </button>
+      </div>
     </div>
   );
 }

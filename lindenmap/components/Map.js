@@ -17,26 +17,47 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useState } from "react";
+import { useEffect } from "react";
 import MapMenue from "./MapMenue";
+import "./components.css";
 
 export default function Map() {
-  const [markers, setMarkers] = useState([
-    { geocode: [6.002, -58.302], popup: "Marker 1" },
-    { geocode: [6.005, -58.305], popup: "Marker 2" },
-    { geocode: [6.008, -58.31], popup: "Marker 3" },
-  ]);
+  const [markers, setMarkers] = useState([]);
 
   const [clickCoords, setClickCoords] = useState(null);
+  const [isMenueOpen, setIsMenueOpen] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/markers")
+      .then((data) => data.json())
+      .then((data) => {
+        setMarkers(data);
+      })
+      .catch((error) => {
+        setMarkers([]); // fallback to empty array on error
+        console.error("Failed to fetch markers:", error);
+      });
+  }, []);
 
   function getclickCoords(latlng) {
     setClickCoords(latlng);
   }
 
+  const MapMenueButton = !isMenueOpen ? (
+    <button className="btn" type="button" onClick={() => setIsMenueOpen(true)}>
+      Open Menue
+    </button>
+  ) : (
+    <MapMenue
+      clickCoords={clickCoords}
+      setMarkers={setMarkers}
+      setIsMenueOpen={setIsMenueOpen}
+    />
+  );
+
   return (
     <div className="page">
-      <div>
-        <MapMenue clickCoords={clickCoords} setMarkers={setMarkers} />
-      </div>
+      <div>{MapMenueButton}</div>
       <MapContainer
         center={[6, -58.3]}
         zoom={13}
@@ -52,7 +73,10 @@ export default function Map() {
         <DetectClick onMapClick={getclickCoords} />
 
         {markers.map((marker) => (
-          <Marker position={marker.geocode}></Marker>
+          <Marker
+            position={marker.geocode}
+            key={Math.random(marker.ID)}
+          ></Marker>
         ))}
       </MapContainer>
     </div>
